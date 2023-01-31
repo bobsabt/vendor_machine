@@ -32,7 +32,7 @@ export const Item: React.FC<ItemProps> = ({ product }) => {
         <StyledGrid item xs={6}>
             <OneProductContainer flexDirection="row">
                 {availableProducts.map((item, index) => 
-                <Box className={`item-${index}`}>
+                <Box className={`item-${index}`} key={index}>
                     {item}
                 </Box>
                 )}
@@ -53,7 +53,7 @@ const StyledGrid = styled(Grid)`
     border-image-slice: 2;
     margin: ${(props)=> props.theme.spacing(4, 0)};
     
-    :nth-child(even) {
+    :nth-of-type(even) {
         border-left: none;
     }
     

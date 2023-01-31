@@ -140,14 +140,14 @@ export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelected
                     <Stack flexDirection={{xs:"row", sm:"column", md:"row"}} alignItems="center" justifyContent="space-between" spacing={0} gap={2} padding="1rem 2rem">
                         <Text textAlign="left">Coins accepted</Text>
                         <Stack flexDirection="row" alignItems="center" gap={2} >
-                            {buttonvaluesIn.map(button => <Coin buttonvalue={button} onClick={onHandleClickSumMoney} disabled={clickedCoinValue < 1000 ? false : true}/>)}
+                            {buttonvaluesIn.map(button => <Coin key={button} buttonvalue={button} onClick={onHandleClickSumMoney} disabled={clickedCoinValue < 1000 ? false : true}/>)}
                         </Stack>
                     </Stack>
-                    <Stack flexDirection="column" alignItems="center" justifyContent="space-between" spacing={0} gap={2} padding="0 2rem">
+                    <Stack flexDirection="column" alignItems="flex-end" justifyContent="space-between" spacing={0} gap={2} padding="0 2rem">
                         <Stack flexDirection={{xs:"row", sm:"column", md:"row"}} alignItems="center" justifyContent="space-between" gap={{xs:10, sm:2, md:10}}>
                             <Text>Change</Text>
                             <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={2}>
-                                {buttonvaluesOut.map(button => <Coin buttonvalue={button} disabled={true}/>)}   
+                                {buttonvaluesOut.map(button => <Coin key={button} buttonvalue={button} disabled={true}/>)}   
                             </Stack>
                         </Stack>
                         <StyledStack  flexDirection="row" alignItems="center" gap={2} height="2rem" >

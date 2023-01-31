@@ -22,7 +22,7 @@ export const MachineBelly: React.FC<MachineBellyProps> = ({ products, selectedIt
         <StyledStack justifyContent="center" alignItems="center" spacing={6} >
             <MachineBellyContainer container columns={12} alignItems="flex-end">
                 {products.map((product) => 
-                    <Item product={product} />
+                    <Item key={product.id} product={product} />
                 )}
             </MachineBellyContainer>
             <Exit selectedItemName={selectedItemName!!}/>

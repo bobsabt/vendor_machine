@@ -18,6 +18,7 @@ export const Touchpad: React.FC<TouchPadProps> = ({ onRefundClick, onHandleClick
         <TouchpadContainer container justifyContent="center" gap={3}>
             {buttons.map((buttonTitle) => 
                 <Button 
+                    key={buttonTitle}
                     value={buttonTitle} 
                     variant="outlined"
                     disabled={disabled}

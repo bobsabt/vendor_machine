@@ -51,6 +51,7 @@ const spacing = {
     8: 2,
     9: 2.5,
     10: 3,
+    10.5:3.5,
     11: 4,
     12: 5, 
     13: 6,
@@ -66,6 +67,7 @@ const theme = createTheme({
     typography: {
         fontFamily: 'Montserrat, sans-serif',
         h1: {fontSize: '4rem', lineHeight: 1.1, fontWeight: 700, color: 'white'},
+        h2: {fontSize: '1.25rem', lineHeight: 1.1, fontWeight: 700, color: 'black'},
         h3: {fontSize: '2rem', lineHeight: 1.1, fontWeight: 600, color: 'black'},
         h4: {fontSize: '1.25rem', lineHeight: 1.1, fontWeight: 300, color: 'white'},
     },

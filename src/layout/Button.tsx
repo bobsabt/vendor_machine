@@ -21,7 +21,7 @@ const Button: ForwardRefRenderFunction<any, ButtonProps> = (
         <Root
             ref={ref}
             disableElevation
-            disabled={isLoading ? true : disabled}
+            disabled={disabled}
             variant={variant}
             color={color}
             {...rest}
@@ -70,46 +70,48 @@ const TextButton = styled(MuiButton)`
 
 const TouchpadButton = styled(MuiButton)`
     ${props => buttonStyles(props.theme)}
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    color: ${props => props.theme.palette.black};
-   
     background-color: ${props => props.theme.palette.middleGrey};
     background-image: -webkit-gradient(linear, left top, left bottom, from(${props => props.theme.palette.middleGrey}), to(${props => props.theme.palette.lightGrey}));
     background-image: -webkit-linear-gradient(top, ${props => props.theme.palette.middleGrey}, ${props => props.theme.palette.lightGrey}); 
     background-image: -moz-linear-gradient(top, ${props => props.theme.palette.middleGrey}, ${props => props.theme.palette.lightGrey}); 
     background-image: -ms-linear-gradient(top, ${props => props.theme.palette.middleGrey}, ${props => props.theme.palette.lightGrey}); 
     background-image: -o-linear-gradient(top, ${props => props.theme.palette.middleGrey}, ${props => props.theme.palette.lightGrey}); 
+    
     color: ${props => props.theme.palette.backgroundLight};
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
+    min-width: 3.5rem;
+    width: 3.5rem;
+    height: 3rem;
+    border-radius: 8px;
     box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px ${props => props.theme.palette.middleGrey};
-`
+    
+    .Mui-disabled {
+        color: ${props => props.theme.palette.backgroundLight};
+        box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px ${props => props.theme.palette.middleGrey};
+    }
+
+    `
 
 const CoinsButton = styled(MuiButton)`
     ${props => buttonStyles(props.theme)}
 
     border-radius: 50%;
     min-width: 3rem;
-
     height: 3rem;
-    background-color: #D4A200;
-    border: 2px solid black;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-   
+    
+    background-color: transparent;
+    border: 2px solid ${props => props.theme.palette.middleGrey};
+ 
     color:  ${props => props.theme.palette.black};
     padding: 0;
+    margin: 0;
 
     &:hover {
-        background-color: #f57c00;
+        background-color: ${props => props.theme.palette.backgroundDark};
+    }
+    .Mui-disabled {
+        &:hover {
+            background-color: transparent;
+        }
     }
 `
 

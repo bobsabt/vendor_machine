@@ -5,25 +5,27 @@ import { Exit } from "./Exit";
 import { Item } from "./Item";
 
 interface MachineBellyProps {
-    originalData: [{
-        id: String,
-        place: String,
-        name: String,
-        numberOfItem: Number
-    }]
+    products: {
+        id: string,
+        place: string,
+        name: string,
+        numberOfItem: number,
+        price: number
+    }[],
+    selectedItemName?: string
 }
 
 
-export const MachineBelly: React.FC<MachineBellyProps> = ({ originalData }) => {
+export const MachineBelly: React.FC<MachineBellyProps> = ({ products, selectedItemName }) => {
    
     return(
         <StyledStack justifyContent="center" alignItems="center" spacing={6} >
-            <MachineBellyContainer container columns={12} alignItems="center">
-                {originalData.map((item: any) => 
-                    <Item data={item} />
+            <MachineBellyContainer container columns={12} alignItems="flex-end">
+                {products.map((product) => 
+                    <Item product={product} />
                 )}
             </MachineBellyContainer>
-            <Exit />
+            <Exit selectedItemName={selectedItemName!!}/>
         </StyledStack>
 
     )

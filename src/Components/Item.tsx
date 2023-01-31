@@ -4,54 +4,53 @@ import { Box } from "../layout/Box";
 import { Grid } from "../layout/Grid";
 import { Stack } from "../layout/Stack";
 import { Text } from "../layout/Text";
-import  Bomba  from "../Pictures/product-bomba.png";
-import  Mars  from "../Pictures/product-mars.png";
-import  Snickers  from "../Pictures/product-snickers.png";
+import  Bomba  from "../Pictures/product_bomba.png";
+import  Mars  from "../Pictures/product_mars.png";
+import  Snickers  from "../Pictures/product_snickers.png";
 
 interface ItemProps {
-    data: {
+    product: {
         place: string,
-        picture: string,
         name: string,
         numberOfItem: number,
         price: number
     }
 }
 
-export const Item: React.FC<ItemProps> = ({ data }) => {
+export const Item: React.FC<ItemProps> = ({ product }) => {
 
-    const arrayOfItems = new Array(data.numberOfItem).fill(
+    const availableProducts = new Array(product.numberOfItem).fill(
         <img 
-            src={data.name === "Bomba" ?
-            Bomba : data.name === "Mars" ?
+            src={product.name === "Bomba" ?
+            Bomba : product.name === "Mars" ?
             Mars : Snickers} 
-            alt={data.name}
+            alt={product.name}
         />
     )
 
     return(
-        
         <StyledGrid item xs={6}>
             <OneProductContainer flexDirection="row">
-                {arrayOfItems.map((item, index) => 
+                {availableProducts.map((item, index) => 
                 <Box className={`item-${index}`}>
                     {item}
                 </Box>
                 )}
             </OneProductContainer>
             <Code flexDirection="row" justifyContent="space-around" alignItems="center">
-                <Text variant="h4">{data.place}</Text>
-                <Text variant="h4">{data.price},-</Text>
+                <Text variant="h4">{product.place}</Text>
+                <Text variant="h4">{product.price},-</Text>
             </Code>
             <StyledBox></StyledBox>
         </StyledGrid>
     )
 }
+
 const StyledGrid = styled(Grid)`
     border-left: 5px solid ${(props)=> props.theme.palette.white};
     border-right: 5px solid ${(props)=> props.theme.palette.white};
     border-image: linear-gradient(to bottom, rgba(0,0,0,0) 25%,${(props)=> props.theme.palette.black} 25%,${(props)=> props.theme.palette.black} 75%,${(props)=> props.theme.palette.black} 75%);
-    border-image-slice: 1;
+    border-image-slice: 2;
     margin: ${(props)=> props.theme.spacing(4, 0)};
     
     :nth-child(even) {
@@ -63,10 +62,12 @@ const StyledGrid = styled(Grid)`
 
 const OneProductContainer = styled(Stack)`
     padding-left: ${(props)=> props.theme.spacing(1)};
+    height: ${(props)=> props.theme.spacing(13)};
     
     img{
         height: ${(props)=> props.theme.spacing(13)};
     }
+    
     .item-0 {
         z-index: 6;
     }
@@ -80,8 +81,8 @@ const OneProductContainer = styled(Stack)`
 
     .item-2 {
         position: absolute;
-        bottom: ${(props)=> props.theme.spacing(10)};
-        left:  ${(props)=> props.theme.spacing(11)};
+        bottom: ${(props)=> props.theme.spacing(9)};
+        left:  ${(props)=> props.theme.spacing(10.5)};
         z-index: 1;
     }
 `
@@ -89,6 +90,7 @@ const OneProductContainer = styled(Stack)`
 const Code = styled(Stack)`
     background-color:${(props)=> props.theme.palette.black};  
 `
+
 const StyledBox = styled(Box)`
     width: 4rem;
     height: 4rem; 

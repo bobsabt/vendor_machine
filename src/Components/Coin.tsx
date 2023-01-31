@@ -5,18 +5,21 @@ import { Text } from '../layout/Text'
 import Button from '../layout/Button'
 
 interface CoinProps {
-     buttonvalues: number,
+     buttonvalue: number,
+     disabled?: boolean,
+     onClick?: (event: any) => void
 }
 
-const Coin: React.FC<CoinProps> = ( { buttonvalues }) => {
+const Coin: React.FC<CoinProps> = ( { buttonvalue, disabled, onClick }) => {
 
   return (
-
     <Button 
-      value={buttonvalues} 
+      value={buttonvalue} 
       variant="contained"
+      disabled={disabled}
+      onClick={onClick}
     >
-    <Text padding="0">{buttonvalues}</Text>
+    <Text padding="0">{buttonvalue}</Text>
     </Button>
    
   )

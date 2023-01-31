@@ -3,16 +3,26 @@ import { MachineBelly } from "./MachineBelly"
 import { TouchPart } from "./TouchPart"
 import { Container } from "../layout/Container"
 import { Stack } from "../layout/Stack"
+import React from "react"
+
+type Data = {
+    id: string,
+    place: string,
+    name: string,
+    numberOfItem: number,
+    price: number
+}[]
 
 export const VendingMachine = () => {
-    
     const originalData = require("../data.json");
+    const [data, setData] = React.useState<Data>(originalData)
+    const [selectedItemName, setSelectedItemName] = React.useState<string | undefined>()
    
     return(
         <Container maxWidth='md'>
             <StyledStack flexDirection="row" >
-                <MachineBelly originalData={originalData}/>
-                <TouchPart />
+                <MachineBelly products={data} selectedItemName={selectedItemName} />
+                <TouchPart data={data} setData={setData} setSelectedItemName={setSelectedItemName}/>
             </StyledStack>
         </Container>
     )

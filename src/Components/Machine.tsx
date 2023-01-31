@@ -20,7 +20,7 @@ export const VendingMachine = () => {
    
     return(
         <Container maxWidth='md'>
-            <StyledStack flexDirection="row" >
+            <StyledStack flexDirection={{xs:"column-reverse", md:"row"}}>
                 <MachineBelly products={data} selectedItemName={selectedItemName} />
                 <TouchPart data={data} setData={setData} setSelectedItemName={setSelectedItemName}/>
             </StyledStack>

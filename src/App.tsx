@@ -1,6 +1,6 @@
 import './App.css';
 import { ThemeProvider } from '@emotion/react';
-import theme from './lib/theme/theme';
+import theme from './theme/theme';
 import { VendingMachine } from './Components/Machine';
 
 function App() {

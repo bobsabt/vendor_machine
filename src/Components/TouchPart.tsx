@@ -6,6 +6,7 @@ import Coin from "./Coin"
 import { Text } from "../layout/Text"
 import  common  from "../Text/common.json"
 import styled from "@emotion/styled"
+import { Box } from "../layout/Box"
 
 interface TouchPartProps {
         data: {
@@ -134,33 +135,36 @@ export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelected
         <Stack>
             <Screen clickedButtonValue={ pressedItemCode ?? clickedCoinValue}/>
             <StyledText variant="h2">{screenMsg}</StyledText>
-            <Stack flexDirection="row" alignItems="center" justifyContent="space-between" spacing={0} gap={2} padding="1rem 2rem">
-                <Text textAlign="left">Coins accepted</Text>
-                <Stack flexDirection="row" alignItems="center" gap={2} >
-                    {buttonvaluesIn.map(button => <Coin buttonvalue={button} onClick={onHandleClickSumMoney} disabled={clickedCoinValue < 1000 ? false : true}/>)}
-                </Stack>
-            </Stack>
-            <Stack flexDirection="column" alignItems="flex-end" justifyContent="space-between" spacing={0} gap={2} padding="0 2rem">
-                <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={10}>
-                    <Text>Change</Text>
-                    <Stack flexDirection="column" alignItems="center" justifyContent="space-between" gap={2}>
-                        <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={2}>
-                            {buttonvaluesOut.map(button => <Coin buttonvalue={button} disabled={true}/>)}
+            <Stack flexDirection={{xs:"column", sm:"row", md:"column"}} alignItems={{xs:"center", sm:"normal"}} justifyContent="center">
+                <Box>
+                    <Stack flexDirection={{xs:"row", sm:"column", md:"row"}} alignItems="center" justifyContent="space-between" spacing={0} gap={2} padding="1rem 2rem">
+                        <Text textAlign="left">Coins accepted</Text>
+                        <Stack flexDirection="row" alignItems="center" gap={2} >
+                            {buttonvaluesIn.map(button => <Coin buttonvalue={button} onClick={onHandleClickSumMoney} disabled={clickedCoinValue < 1000 ? false : true}/>)}
                         </Stack>
                     </Stack>
-                </Stack>
-                <StyledStack  flexDirection="row" alignItems="center" gap={2} height="2rem" >
-                    {isChangeVisible && <>
-                        <Text className="change">{moneyLeft?.twenty}</Text>
-                        <Text className="change">{moneyLeft?.ten}</Text>
-                        <Text className="change">{moneyLeft?.five}</Text>
-                    </>}
-                </StyledStack>
-            </Stack>
-            <Touchpad 
-                onRefundClick={onHandleClickRefundButton} 
-                onHandleClickTouchButton={onHandleClickTouchButton}
-                disabled={isCoinsActive ? true : false}/> 
+                    <Stack flexDirection="column" alignItems="center" justifyContent="space-between" spacing={0} gap={2} padding="0 2rem">
+                        <Stack flexDirection={{xs:"row", sm:"column", md:"row"}} alignItems="center" justifyContent="space-between" gap={{xs:10, sm:2, md:10}}>
+                            <Text>Change</Text>
+                            <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={2}>
+                                {buttonvaluesOut.map(button => <Coin buttonvalue={button} disabled={true}/>)}   
+                            </Stack>
+                        </Stack>
+                        <StyledStack  flexDirection="row" alignItems="center" gap={2} height="2rem" >
+                            {isChangeVisible && <>
+                                <Text className="change">{moneyLeft?.twenty}</Text>
+                                <Text className="change">{moneyLeft?.ten}</Text>
+                                <Text className="change">{moneyLeft?.five}</Text>
+                            </>}
+                        </StyledStack>
+                    </Stack>
+                </Box>
+                <Touchpad 
+                    onRefundClick={onHandleClickRefundButton} 
+                    onHandleClickTouchButton={onHandleClickTouchButton}
+                    disabled={isCoinsActive ? true : false}
+                />
+            </Stack> 
         </Stack>
 )}
 

@@ -63,7 +63,7 @@ const StyledGrid = styled(Grid)`
 const OneProductContainer = styled(Stack)`
     padding-left: ${(props)=> props.theme.spacing(1)};
     height: ${(props)=> props.theme.spacing(13)};
-    
+
     img{
         height: ${(props)=> props.theme.spacing(13)};
     }
@@ -105,4 +105,22 @@ const StyledBox = styled(Box)`
     left: ${(props)=> props.theme.spacing(10)};
     bottom: ${(props)=> props.theme.spacing(5)};
     z-index: 7;
+
+    ${(props)=> props.theme.breakpoints.down('md')} {
+        left: ${(props)=> props.theme.spacing(12)};
+    }
+    
+    ${(props)=> props.theme.breakpoints.down('sm')} {
+        left: ${(props)=> props.theme.spacing(10)};
+    }
+
+    @media screen and (max-width: 425px) {
+        width: 3rem;
+        height: 3rem; 
+        left: ${(props)=> props.theme.spacing(8)};
+    }
+
+    @media screen and (max-width: 360px) {
+        left: ${(props)=> props.theme.spacing(6)};
+    }
 `

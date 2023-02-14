@@ -1,26 +1,25 @@
 
 import styled from "@emotion/styled"
 import { Stack } from "../layout/Stack";
-import  Bomba  from "../Pictures/product_bomba.png";
-import  Mars  from "../Pictures/product_mars.png";
-import  Snickers  from "../Pictures/product_snickers.png";
-
 
 interface ExitProps {
-  selectedItemName: string
+  selectedItem: {
+    name: string,
+    imgSrc: string
+  }
 }
 
-export const Exit: React.FC<ExitProps> = ({selectedItemName}) => {
+export const Exit: React.FC<ExitProps> = ({selectedItem}) => {
+  const basePath = './images/'
+  
   return (
     <Collect alignItems="center" justifyContent="center"> 
       {
-        selectedItemName &&  
+        selectedItem &&  
         <img
           className="selected-item"
-          src={selectedItemName === "Bomba" ? 
-              Bomba : selectedItemName === "Mars" ?
-              Mars : Snickers} 
-          alt={selectedItemName}
+          src={`${basePath}${selectedItem.imgSrc}`}
+          alt={selectedItem.name}
         />
       }    
     </Collect>

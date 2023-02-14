@@ -8,16 +8,17 @@ import  common  from "../Text/common.json"
 import styled from "@emotion/styled"
 import { Box } from "../layout/Box"
 
-interface TouchPartProps {
+interface KeyPadAreaProps {
         data: {
             id: string,
             place: string,
             name: string,
             numberOfItem: number,
-            price: number
+            price: number,
+            imgSrc: string
         }[],
         setData: (value: any) => void, 
-        setSelectedItemName: (value?: any) => void
+        setSelectedItem: (value?: any) => void
 }
 
 type PressedItemCode = {
@@ -26,53 +27,53 @@ type PressedItemCode = {
     five: string
 }
 
-export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelectedItemName }) => {
-    const [clickedCoinValue, setClickedCoinValue] = React.useState<number>(0)
+export const KeyPadArea: React.FC<KeyPadAreaProps> = ({ data, setData, setSelectedItem }) => {
+    const [sumOfMoney, setSumOfMoney] = React.useState<number>(0)
     const [pressedItemCode, setPressedItemCode] = React.useState<string | null>()
-    const [moneyLeft, setMoneyLeft] = React.useState<PressedItemCode | null>()
+    const [refundedMoney, setRefundedMoney] = React.useState<PressedItemCode | null>()
     const [isChangeVisible, setIsChangeVisible] = React.useState<boolean>(false)
-    const [isCoinsActive, setIsCoinsActive] = React.useState<boolean>(true)
+    const [isTouchPadActive, setIsTouchPadActive] = React.useState<boolean>(false)
     const [screenMsg, setScreenMsg] = React.useState<string>(common.select_coins)
 
     const buttonvaluesIn = [200, 100, 50]
     const buttonvaluesOut = [20, 10, 5]
 
     const onHandleClickSumMoney = (event: any) => { 
-        setIsCoinsActive(true)
+        if(sumOfMoney >= 1000) return
+        const sum = sumOfMoney + parseInt(event.currentTarget.value)
+        setSelectedItem()
         setIsChangeVisible(false)
-        const sum = clickedCoinValue + parseInt(event.currentTarget.value)
-        setClickedCoinValue(sum)
-        setSelectedItemName()
-        setMoneyLeft(null)
+        setSumOfMoney(sum)
+        setRefundedMoney(null)
 
         let findPriceOBJ = data.find(item => item.price <= sum)
 
         if (findPriceOBJ !== undefined) {
             setScreenMsg(common.select_item)
-            setIsCoinsActive(false)
+            setIsTouchPadActive(true)
         }
     }
 
-    const onHandleClickRefundButton = (event: any) => { 
-        getRefundMoney(clickedCoinValue)
-        setClickedCoinValue(0)
+    const onHandleClickRefundButton = () => {
+        getRefundMoney(sumOfMoney)
+        setSumOfMoney(0)
         setPressedItemCode(null)
         setIsChangeVisible(true)
         setScreenMsg(common.select_coins)
-        setIsCoinsActive(true)
+        setIsTouchPadActive(false)
     }
 
+    const onHandleClickTouchButton = (event: React.FormEvent<HTMLInputElement>) => {
+        if (!pressedItemCode && event.currentTarget.value !== 'Clear') {
+            setPressedItemCode(event.currentTarget.value)
+            return
+        } 
 
-    const onHandleClickTouchButton = (event: any) => {
         if (event.currentTarget.value === 'Clear') {
             setPressedItemCode('')
             setScreenMsg(common.select_item)
             return
         }
-        if (!pressedItemCode) {
-            setPressedItemCode(event.currentTarget.value)
-            return
-        } 
             
         let selectItemCode = pressedItemCode?.toString() + event.currentTarget.value.toString()
 
@@ -88,7 +89,7 @@ export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelected
                 return
             }
 
-            if (selectedItemGroup !== undefined && selectedItemGroup.numberOfItem >= 0) {
+            if (selectedItemGroup !== undefined && selectedItemGroup.numberOfItem > 0 && selectedItemGroup.price <= sumOfMoney) {
                 let numberOfSelectedItemGroup = selectedItemGroup.numberOfItem
                 selectedItemGroup.numberOfItem = numberOfSelectedItemGroup.valueOf() - 1
 
@@ -100,15 +101,16 @@ export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelected
                 })    
 
                 setData(modifiedData)
-                setSelectedItemName(selectedItemGroup.name)
+                setSelectedItem({"name": selectedItemGroup.name, "imgSrc": selectedItemGroup.imgSrc})
                 setPressedItemCode(null)
-                setClickedCoinValue(0)
+                setSumOfMoney(0)
                 setScreenMsg(common.select_coins)
-                getRefundMoney(clickedCoinValue, selectedItemGroup.price)
-                setIsCoinsActive(true)
+                getRefundMoney(sumOfMoney, selectedItemGroup.price)
+                setIsTouchPadActive(false)
                 setIsChangeVisible(true)
             } else {
                 setScreenMsg(common.empty_item_selected)
+                setPressedItemCode('')
             }
         }
        
@@ -128,19 +130,19 @@ export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelected
         let temp5 =(money - money % 5) / 5;
         money = money - temp5 * 5
 
-        setMoneyLeft({twenty: temp20+'X', ten: temp10+'X', five: temp5+'X'})
+        setRefundedMoney({twenty: temp20+'X', ten: temp10+'X', five: temp5+'X'})
     }
 
     return(
         <Stack>
-            <Screen clickedButtonValue={ pressedItemCode ?? clickedCoinValue}/>
+            <Screen clickedButtonValue={ pressedItemCode ?? sumOfMoney}/>
             <StyledText variant="h2">{screenMsg}</StyledText>
             <Stack flexDirection={{xs:"column", sm:"row", md:"column"}} alignItems={{xs:"center", sm:"normal"}} justifyContent="center">
                 <Box>
                     <Stack flexDirection={{xs:"row", sm:"column", md:"row"}} alignItems="center" justifyContent="space-between" spacing={0} gap={2} padding="1rem 2rem">
                         <Text textAlign="left">Coins accepted</Text>
                         <Stack flexDirection="row" alignItems="center" gap={2} >
-                            {buttonvaluesIn.map(button => <Coin key={button} buttonvalue={button} onClick={onHandleClickSumMoney} disabled={clickedCoinValue < 1000 ? false : true}/>)}
+                            {buttonvaluesIn.map(button => <Coin key={button} buttonvalue={button} onClick={onHandleClickSumMoney} disabled={typeof(pressedItemCode) === 'string' ? true : false }/>)}
                         </Stack>
                     </Stack>
                     <Stack flexDirection="column" alignItems="flex-end" justifyContent="space-between" spacing={0} gap={2} padding="0 2rem">
@@ -152,9 +154,9 @@ export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelected
                         </Stack>
                         <StyledStack  flexDirection="row" alignItems="center" gap={2} height="2rem" >
                             {isChangeVisible && <>
-                                <Text className="change">{moneyLeft?.twenty}</Text>
-                                <Text className="change">{moneyLeft?.ten}</Text>
-                                <Text className="change">{moneyLeft?.five}</Text>
+                                <Text className="change">{refundedMoney?.twenty}</Text>
+                                <Text className="change">{refundedMoney?.ten}</Text>
+                                <Text className="change">{refundedMoney?.five}</Text>
                             </>}
                         </StyledStack>
                     </Stack>
@@ -162,7 +164,7 @@ export const TouchPart: React.FC<TouchPartProps> = ({ data, setData, setSelected
                 <Touchpad 
                     onRefundClick={onHandleClickRefundButton} 
                     onHandleClickTouchButton={onHandleClickTouchButton}
-                    disabled={isCoinsActive ? true : false}
+                    disabled={isTouchPadActive ? false : true}
                 />
             </Stack> 
         </Stack>

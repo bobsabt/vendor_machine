@@ -5,7 +5,7 @@ import { Grid } from "../layout/Grid";
 import Button from "../layout/Button";
 
 interface TouchPadProps {
-    onRefundClick: (event: any) => void
+    onRefundClick: () => void
     onHandleClickTouchButton: (event: any) => void
     disabled: boolean
 }

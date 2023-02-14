@@ -4,42 +4,39 @@ import { Box } from "../layout/Box";
 import { Grid } from "../layout/Grid";
 import { Stack } from "../layout/Stack";
 import { Text } from "../layout/Text";
-import  Bomba  from "../Pictures/product_bomba.png";
-import  Mars  from "../Pictures/product_mars.png";
-import  Snickers  from "../Pictures/product_snickers.png";
 
 interface ItemProps {
-    product: {
+    item: {
         place: string,
         name: string,
         numberOfItem: number,
-        price: number
+        price: number,
+        imgSrc: string,
     }
 }
 
-export const Item: React.FC<ItemProps> = ({ product }) => {
+export const Item: React.FC<ItemProps> = ({ item }) => {
+    const basePath = './images/'
 
-    const availableProducts = new Array(product.numberOfItem).fill(
+    const availableItems = new Array(item.numberOfItem).fill(
         <img 
-            src={product.name === "Bomba" ?
-            Bomba : product.name === "Mars" ?
-            Mars : Snickers} 
-            alt={product.name}
+            src={`${basePath}${item.imgSrc}`}
+            alt={item.name}
         />
     )
 
     return(
         <StyledGrid item xs={6}>
             <OneProductContainer flexDirection="row">
-                {availableProducts.map((item, index) => 
+                {availableItems.map((item, index) => 
                 <Box className={`item-${index}`} key={index}>
                     {item}
                 </Box>
                 )}
             </OneProductContainer>
             <Code flexDirection="row" justifyContent="space-around" alignItems="center">
-                <Text variant="h4">{product.place}</Text>
-                <Text variant="h4">{product.price},-</Text>
+                <Text variant="h4">{item.place}</Text>
+                <Text variant="h4">{item.price},-</Text>
             </Code>
             <StyledBox></StyledBox>
         </StyledGrid>

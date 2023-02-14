@@ -1,6 +1,6 @@
 {
     "select_coins": "Select coins",
     "select_item": "Please select an item",
-    "not_valid_itemcode": "Not valid code, <br>please clear",
-    "empty_item_selected": "Please select an other one or refund your money"
+    "not_valid_itemcode": "Not valid, please clear",
+    "empty_item_selected": "Select item or refund"
 }

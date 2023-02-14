@@ -4,16 +4,15 @@
         "place": "A1",
         "name": "Bomba",
         "numberOfItem": 3,
-        "imgSrc": "src/Pictures/product-bomba.png",
+        "imgSrc": "bomba.png",
         "price": 300
-
     },
     {
         "id": "A2",
         "place": "A2",
         "name": "Bomba",
-        "numberOfItem": 2,
-        "imgSrc": "../Pictures/product-bomba.png",
+        "numberOfItem": 1,
+        "imgSrc": "bomba.png",
         "price": 300
     },
     {
@@ -21,6 +20,7 @@
         "place": "A3",
         "name": "Mars",
         "numberOfItem": 3,
+        "imgSrc": "mars.png",
         "price": 250
     },
     {
@@ -28,12 +28,14 @@
         "place": "A4",
         "name": "Mars",
         "numberOfItem": 3,
+        "imgSrc": "mars.png",
         "price": 250
     },
     {
         "id": "A5",
         "place": "A5",
         "name": "Snickers",
+        "imgSrc": "snickers.png",
         "numberOfItem": 2,
         "price": 250
     },
@@ -41,6 +43,7 @@
         "id": "A6",
         "place": "A6",
         "name": "Snickers",
+        "imgSrc": "snickers.png",
         "numberOfItem": 3,
         "price": 250
     }

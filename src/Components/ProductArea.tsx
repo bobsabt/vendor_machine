@@ -4,28 +4,31 @@ import { Stack } from "../layout/Stack";
 import { Exit } from "./Exit";
 import { Item } from "./Item";
 
-interface MachineBellyProps {
+interface ProductAreaProps {
     products: {
         id: string,
         place: string,
         name: string,
         numberOfItem: number,
-        price: number
+        price: number,
+        imgSrc: string
     }[],
-    selectedItemName?: string
+    selectedItem?: {
+        name: string,
+        imgSrc: string
+    }
 }
 
-
-export const MachineBelly: React.FC<MachineBellyProps> = ({ products, selectedItemName }) => {
+export const ProductArea: React.FC<ProductAreaProps> = ({ products, selectedItem }) => { 
    
     return(
         <StyledStack justifyContent="center" alignItems="center" spacing={6} >
-            <MachineBellyContainer container columns={12} alignItems="flex-end">
+            <ProductAreaContainer container columns={12} alignItems="flex-end">
                 {products.map((product) => 
-                    <Item key={product.id} product={product} />
+                    <Item key={product.id} item={product} />
                 )}
-            </MachineBellyContainer>
-            <Exit selectedItemName={selectedItemName!!}/>
+            </ProductAreaContainer>
+            <Exit selectedItem={selectedItem!!}/>
         </StyledStack>
 
     )
@@ -35,7 +38,7 @@ const StyledStack = styled(Stack)`
     padding:  ${(props)=> props.theme.spacing(3, 4)};
     box-shadow: 10px 0 5px -2px ${(props)=> props.theme.palette.lightGrey};
 `
-const MachineBellyContainer = styled(Grid)`
+const ProductAreaContainer = styled(Grid)`
     border: 2px solid ${(props)=> props.theme.palette.white};
     border-radius: ${(props)=> props.theme.spacing(3)};
     background-color: ${(props)=> props.theme.palette.middleGrey};
